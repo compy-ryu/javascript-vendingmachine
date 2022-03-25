@@ -79,13 +79,15 @@ var Router = /*#__PURE__*/function () {
   function Router(pageList) {
     _classCallCheck(this, Router);
 
+    _defineProperty(this, "pathname", window.location.pathname.slice(0, -1));
+
     _defineProperty(this, "pageHeader", new _Display_Header__WEBPACK_IMPORTED_MODULE_1__["default"]());
 
     _defineProperty(this, "pageList", void 0);
 
     this.pageList = pageList;
     this.setEvents();
-    this.pageRender(window.location.search);
+    this.pageRender(this.pathname + window.location.search);
   }
 
   _createClass(Router, [{
@@ -106,7 +108,7 @@ var Router = /*#__PURE__*/function () {
   }, {
     key: "pushState",
     value: function pushState(searchUrl) {
-      window.history.pushState((0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsObject)(searchUrl), '', searchUrl);
+      window.history.pushState((0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsObject)(searchUrl), '', this.pathname + searchUrl);
       this.pageRender(searchUrl);
     }
   }, {
