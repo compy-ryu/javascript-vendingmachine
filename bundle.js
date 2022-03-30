@@ -85,9 +85,11 @@ var Router = /*#__PURE__*/function () {
 
     _defineProperty(this, "pageList", void 0);
 
+    _defineProperty(this, "previousPage", void 0);
+
     this.pageList = pageList;
     this.setEvents();
-    this.pageRender(this.pathname + window.location.search);
+    this.pageRender(this.pathname + (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsParse)(window.location.search));
   }
 
   _createClass(Router, [{
@@ -108,8 +110,9 @@ var Router = /*#__PURE__*/function () {
   }, {
     key: "pushState",
     value: function pushState(searchUrl) {
-      window.history.pushState((0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsObject)(searchUrl), '', this.pathname + searchUrl);
-      this.pageRender(searchUrl);
+      var searchParams = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsParse)(searchUrl);
+      window.history.pushState((0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsObject)(searchParams), '', this.pathname + searchUrl);
+      this.pageRender(searchParams);
     }
   }, {
     key: "pageRender",
@@ -121,7 +124,9 @@ var Router = /*#__PURE__*/function () {
       this.pageHeader.render({
         currentPage: page
       });
-      !!this.pageList[page] && this.pageList[page].loadPage();
+      !!this.pageList[page] && this.pageList[page].mountPage();
+      this.previousPage && this.previousPage.unmountPage();
+      this.previousPage = this.pageList[page];
     }
   }]);
 
@@ -144,7 +149,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Utils_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Utils/index */ "./src/es/utils/index.ts");
 /* harmony import */ var _Utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @Utils/VendingMachine/validator */ "./src/es/utils/VendingMachine/validator.ts");
-/* harmony import */ var _Store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @Store/HoldingAmountStore */ "./src/es/Store/HoldingAmountStore.ts");
+/* harmony import */ var _Store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @Store/HoldingAmountStore */ "./src/es/store/HoldingAmountStore.ts");
 /* harmony import */ var _Display_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @Display/template */ "./src/es/display/template.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -175,14 +180,14 @@ var HoldingAmountPage = /*#__PURE__*/function () {
 
     _defineProperty(this, "$table", void 0);
 
-    _defineProperty(this, "loadPage", function () {
+    _defineProperty(this, "mountPage", function () {
       (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('main').innerHTML = _Display_template__WEBPACK_IMPORTED_MODULE_3__.template.holdingAmountPage;
 
       _this.setDom();
 
       _this.render({
         state: _Store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
-        changeStates: Object.keys(_this.renderMethodList)
+        changedStateNames: Object.keys(_this.renderMethodList)
       });
 
       _this.setEvents();
@@ -190,8 +195,8 @@ var HoldingAmountPage = /*#__PURE__*/function () {
 
     _defineProperty(this, "render", function (_ref) {
       var state = _ref.state,
-          changeStates = _ref.changeStates;
-      var renderTargetMethod = changeStates.reduce(function (previous, stateKey) {
+          changedStateNames = _ref.changedStateNames;
+      var renderTargetMethod = changedStateNames.reduce(function (previous, stateKey) {
         _this.renderMethodList[stateKey].forEach(function (renderMethod) {
           return previous.add(renderMethod);
         });
@@ -218,6 +223,14 @@ var HoldingAmountPage = /*#__PURE__*/function () {
   }
 
   _createClass(HoldingAmountPage, [{
+    key: "unmountPage",
+    value: function unmountPage() {
+      this.$addForm = null;
+      this.$addFormSection = null;
+      this.$tableSection = null;
+      this.$table = null;
+    }
+  }, {
     key: "setDom",
     value: function setDom() {
       this.$addFormSection = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('#add-holding-amount-form-section');
@@ -275,7 +288,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Utils_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Utils/index */ "./src/es/utils/index.ts");
 /* harmony import */ var _Utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @Utils/VendingMachine/validator */ "./src/es/utils/VendingMachine/validator.ts");
-/* harmony import */ var _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @Store/ProductStore */ "./src/es/Store/ProductStore.ts");
+/* harmony import */ var _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @Store/ProductStore */ "./src/es/store/ProductStore.ts");
 /* harmony import */ var _Display_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @Display/template */ "./src/es/display/template.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -306,14 +319,14 @@ var ProductPage = /*#__PURE__*/function () {
 
     _defineProperty(this, "$table", void 0);
 
-    _defineProperty(this, "loadPage", function () {
+    _defineProperty(this, "mountPage", function () {
       (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('main').innerHTML = _Display_template__WEBPACK_IMPORTED_MODULE_3__.template.productPage;
 
       _this.setDom();
 
       _this.render({
         state: _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
-        changeStates: Object.keys(_this.renderMethodList)
+        changedStateNames: Object.keys(_this.renderMethodList)
       });
 
       _this.setEvents();
@@ -321,8 +334,8 @@ var ProductPage = /*#__PURE__*/function () {
 
     _defineProperty(this, "render", function (_ref) {
       var state = _ref.state,
-          changeStates = _ref.changeStates;
-      var renderTargetMethod = changeStates.reduce(function (previous, stateKey) {
+          changedStateNames = _ref.changedStateNames;
+      var renderTargetMethod = changedStateNames.reduce(function (previous, stateKey) {
         _this.renderMethodList[stateKey].forEach(function (renderMethod) {
           return previous.add(renderMethod);
         });
@@ -345,6 +358,14 @@ var ProductPage = /*#__PURE__*/function () {
   }
 
   _createClass(ProductPage, [{
+    key: "unmountPage",
+    value: function unmountPage() {
+      this.$addForm = null;
+      this.$addFormSection = null;
+      this.$tableSection = null;
+      this.$table = null;
+    }
+  }, {
     key: "setDom",
     value: function setDom() {
       this.$addFormSection = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('#add-product-form-section');
@@ -356,7 +377,7 @@ var ProductPage = /*#__PURE__*/function () {
     key: "setRenderMethodList",
     value: function setRenderMethodList() {
       this.renderMethodList = {
-        products: [this.drawProductList, this.drawProductList]
+        products: [this.drawProductList]
       };
     }
   }, {
@@ -469,7 +490,7 @@ var ProductPage = /*#__PURE__*/function () {
       var $tableRow = $target.closest('tr[data-primary-key]');
       if (!$tableRow) return;
       var productIndex = $tableRow.dataset.primaryKey;
-      _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].removeProductByIndex(productIndex);
+      _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].updateProduct(productIndex);
     }
   }]);
 
@@ -517,7 +538,7 @@ var template = {
     var name = _ref3.name,
         price = _ref3.price,
         quantity = _ref3.quantity;
-    return "\n    <td><input type=\"text\" name=\"name\" placeholder=\"\uC0C1\uD488\uBA85\" value=\"".concat(name, "\"></td>\n    <td><input type=\"number\" name=\"price\" placeholder=\"\uAC00\uACA9\" value=\"").concat(price.toLocaleString(), "\"></td>\n    <td><input type=\"number\" name=\"quantity\" placeholder=\"\uC218\uB7C9\" value=\"").concat(quantity, "\"></td>\n    <td>\n      <div class=\"button-group\">\n        <button class=\"button product-update-confirm-button\" type=\"button\">\uD655\uC778</button>\n        <button class=\"button product-update-cancel-button\" type=\"button\">\uCDE8\uC18C</button>\n      </div>\n    </td>\n");
+    return "\n    <td><input type=\"text\" name=\"name\" placeholder=\"\uC0C1\uD488\uBA85\" value=\"".concat(name, "\"></td>\n    <td><input type=\"number\" name=\"price\" placeholder=\"\uAC00\uACA9\" value=\"").concat(price, "\"></td>\n    <td><input type=\"number\" name=\"quantity\" placeholder=\"\uC218\uB7C9\" value=\"").concat(quantity, "\"></td>\n    <td>\n      <div class=\"button-group\">\n        <button class=\"button product-update-confirm-button\" type=\"button\">\uD655\uC778</button>\n        <button class=\"button product-update-cancel-button\" type=\"button\">\uCDE8\uC18C</button>\n      </div>\n    </td>\n");
   },
   holdingAmountTableRows: function holdingAmountTableRows(coins) {
     return coins.map(function (coin, index) {
@@ -536,165 +557,6 @@ var template = {
 
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./src/es/Store/HoldingAmountStore.ts":
-/*!********************************************!*\
-  !*** ./src/es/Store/HoldingAmountStore.ts ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _Utils_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Utils/index */ "./src/es/utils/index.ts");
-/* harmony import */ var _Constants_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @Constants/index */ "./src/es/constants/index.ts");
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
-
-var HoldingAmountStore = /** @class */ (function () {
-    function HoldingAmountStore() {
-        this.state = {
-            coins: [0, 0, 0, 0]
-        };
-        this.subscribers = [];
-    }
-    HoldingAmountStore.prototype.addSubscriber = function (subscriber) {
-        this.subscribers.push(subscriber);
-    };
-    HoldingAmountStore.prototype.setState = function (newState) {
-        var _this = this;
-        var changeStates = Object.entries(newState).map(function (_a) {
-            var key = _a[0];
-            return key;
-        });
-        this.state = __assign(__assign({}, this.state), newState);
-        this.subscribers.forEach(function (renderMethod) { return renderMethod({ state: _this.state, changeStates: changeStates }); });
-    };
-    HoldingAmountStore.prototype.getState = function () {
-        return __assign({}, this.state);
-    };
-    HoldingAmountStore.prototype.getTotalAmount = function () {
-        return this.state.coins.reduce(function (previous, coin, index) { return (previous += _Constants_index__WEBPACK_IMPORTED_MODULE_1__.COIN_TYPE[index] * coin); }, 0);
-    };
-    HoldingAmountStore.prototype.getMaxCoinIndex = function (baseAmount) {
-        return _Constants_index__WEBPACK_IMPORTED_MODULE_1__.COIN_TYPE.findIndex(function (coin) { return baseAmount >= coin; });
-    };
-    HoldingAmountStore.prototype.getRandomCoinsFromAmount = function (amount) {
-        var leftAmount = amount;
-        var returnCoins = [0, 0, 0, 0];
-        while (leftAmount > 0) {
-            var coinIndex = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getRandomNumber)(this.getMaxCoinIndex(leftAmount), _Constants_index__WEBPACK_IMPORTED_MODULE_1__.COIN_TYPE.length - 1);
-            var randomCoin = _Constants_index__WEBPACK_IMPORTED_MODULE_1__.COIN_TYPE[coinIndex];
-            returnCoins[coinIndex] += 1;
-            leftAmount -= randomCoin;
-        }
-        return returnCoins;
-    };
-    HoldingAmountStore.prototype.addAmount = function (amount) {
-        var coinsToAdd = this.getRandomCoinsFromAmount(amount);
-        var totalCoins = this.state.coins.map(function (value, index) { return value + coinsToAdd[index]; });
-        this.setState({
-            coins: totalCoins
-        });
-    };
-    return HoldingAmountStore;
-}());
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new HoldingAmountStore());
-
-
-/***/ }),
-
-/***/ "./src/es/Store/ProductStore.ts":
-/*!**************************************!*\
-  !*** ./src/es/Store/ProductStore.ts ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-var ProductStore = /** @class */ (function () {
-    function ProductStore() {
-        this.state = {
-            products: []
-        };
-        this.subscribers = [];
-    }
-    ProductStore.prototype.addSubscriber = function (subscriber) {
-        this.subscribers.push(subscriber);
-    };
-    ProductStore.prototype.setState = function (newState) {
-        var _this = this;
-        var changeStates = Object.entries(newState).map(function (_a) {
-            var key = _a[0];
-            return key;
-        });
-        this.state = __assign(__assign({}, this.state), newState);
-        this.subscribers.forEach(function (renderMethod) { return renderMethod({ state: _this.state, changeStates: changeStates }); });
-    };
-    ProductStore.prototype.getState = function () {
-        return __assign({}, this.state);
-    };
-    ProductStore.prototype.addProduct = function (product) {
-        this.setState({
-            products: __spreadArray(__spreadArray([], this.state.products, true), [product], false)
-        });
-    };
-    ProductStore.prototype.updateProduct = function (index, product) {
-        var updateProducts = __spreadArray([], this.state.products, true);
-        updateProducts.splice(index, 1, product);
-        this.setState({
-            products: updateProducts
-        });
-    };
-    ProductStore.prototype.removeProductByIndex = function (index) {
-        var updateProducts = __spreadArray([], this.state.products, true);
-        updateProducts.splice(index, 1);
-        this.setState({
-            products: updateProducts
-        });
-    };
-    ProductStore.prototype.findProductIndexByName = function (name) {
-        return this.state.products.findIndex(function (product) { return product.name === name; });
-    };
-    return ProductStore;
-}());
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new ProductStore());
 
 
 /***/ }),
@@ -734,6 +596,196 @@ var ERROR_MESSAGE = {
     HOLDING_AMOUNT_WRONG_UNIT: "\uCD94\uAC00\uD560 \uC790\uD310\uAE30 \uBCF4\uC720 \uAE08\uC561\uC740 ".concat(VENDING_MACHINE.MONEY_UNIT, "\uC6D0 \uB2E8\uC704\uB85C \uC785\uB825\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."),
     HOLDING_AMOUNT_WRONG_LIMIT: "\uC790\uD310\uAE30 \uBCF4\uC720 \uAE08\uC561\uC740 ".concat(VENDING_MACHINE.MAX_HOLDING_AMOUNT, "\uC6D0\uAE4C\uC9C0 \uCDA9\uC804\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.")
 };
+
+
+/***/ }),
+
+/***/ "./src/es/store/Abstract.ts":
+/*!**********************************!*\
+  !*** ./src/es/store/Abstract.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var Store = /** @class */ (function () {
+    function Store() {
+        this.subscribers = [];
+    }
+    Store.prototype.addSubscriber = function (subscriber) {
+        this.subscribers.push(subscriber);
+    };
+    Store.prototype.setState = function (newState) {
+        var _this = this;
+        var changedStateNames = Object.entries(newState).map(function (_a) {
+            var key = _a[0];
+            return key;
+        });
+        this.state = __assign(__assign({}, this.state), newState);
+        this.subscribers.forEach(function (renderMethod) {
+            return renderMethod({ state: _this.state, changedStateNames: changedStateNames });
+        });
+    };
+    Store.prototype.getState = function () {
+        return __assign({}, this.state);
+    };
+    return Store;
+}());
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Store);
+
+
+/***/ }),
+
+/***/ "./src/es/store/HoldingAmountStore.ts":
+/*!********************************************!*\
+  !*** ./src/es/store/HoldingAmountStore.ts ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Utils_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Utils/index */ "./src/es/utils/index.ts");
+/* harmony import */ var _Constants_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @Constants/index */ "./src/es/constants/index.ts");
+/* harmony import */ var _Abstract__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Abstract */ "./src/es/store/Abstract.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+
+var HoldingAmountStore = /** @class */ (function (_super) {
+    __extends(HoldingAmountStore, _super);
+    function HoldingAmountStore() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = {
+            coins: [0, 0, 0, 0]
+        };
+        return _this;
+    }
+    HoldingAmountStore.prototype.getTotalAmount = function () {
+        return this.state.coins.reduce(function (previous, coin, index) { return (previous += _Constants_index__WEBPACK_IMPORTED_MODULE_1__.COIN_TYPE[index] * coin); }, 0);
+    };
+    HoldingAmountStore.prototype.getMaxCoinIndex = function (baseAmount) {
+        return _Constants_index__WEBPACK_IMPORTED_MODULE_1__.COIN_TYPE.findIndex(function (coin) { return baseAmount >= coin; });
+    };
+    HoldingAmountStore.prototype.getRandomCoinsFromAmount = function (amount) {
+        var leftAmount = amount;
+        var randomCoins = [0, 0, 0, 0];
+        while (leftAmount > 0) {
+            var coinIndex = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getRandomNumber)(this.getMaxCoinIndex(leftAmount), _Constants_index__WEBPACK_IMPORTED_MODULE_1__.COIN_TYPE.length - 1);
+            var randomCoin = _Constants_index__WEBPACK_IMPORTED_MODULE_1__.COIN_TYPE[coinIndex];
+            randomCoins[coinIndex] += 1;
+            leftAmount -= randomCoin;
+        }
+        return randomCoins;
+    };
+    HoldingAmountStore.prototype.addAmount = function (amount) {
+        var coinsToAdd = this.getRandomCoinsFromAmount(amount);
+        var totalCoins = this.state.coins.map(function (value, index) { return value + coinsToAdd[index]; });
+        this.setState({
+            coins: totalCoins
+        });
+    };
+    return HoldingAmountStore;
+}(_Abstract__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new HoldingAmountStore());
+
+
+/***/ }),
+
+/***/ "./src/es/store/ProductStore.ts":
+/*!**************************************!*\
+  !*** ./src/es/store/ProductStore.ts ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Abstract__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Abstract */ "./src/es/store/Abstract.ts");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+
+var ProductStore = /** @class */ (function (_super) {
+    __extends(ProductStore, _super);
+    function ProductStore() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = {
+            products: []
+        };
+        return _this;
+    }
+    ProductStore.prototype.addProduct = function (product) {
+        this.setState({
+            products: __spreadArray(__spreadArray([], this.state.products, true), [product], false)
+        });
+    };
+    ProductStore.prototype.updateProduct = function (index, replaceProduct) {
+        if (replaceProduct === void 0) { replaceProduct = null; }
+        var updateProduct = __spreadArray([], this.state.products, true);
+        replaceProduct
+            ? updateProduct.splice(index, 1, replaceProduct)
+            : updateProduct.splice(index, 1);
+        this.setState({
+            products: updateProduct
+        });
+    };
+    ProductStore.prototype.findProductIndexByName = function (name) {
+        return this.state.products.findIndex(function (product) { return product.name === name; });
+    };
+    return ProductStore;
+}(_Abstract__WEBPACK_IMPORTED_MODULE_0__["default"]));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new ProductStore());
 
 
 /***/ }),
@@ -800,6 +852,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isNumberInRange": () => (/* binding */ isNumberInRange),
 /* harmony export */   "isStringLengthInRange": () => (/* binding */ isStringLengthInRange),
 /* harmony export */   "isCorrectNumberUnit": () => (/* binding */ isCorrectNumberUnit),
+/* harmony export */   "getSearchParamsParse": () => (/* binding */ getSearchParamsParse),
 /* harmony export */   "getSearchParamsObject": () => (/* binding */ getSearchParamsObject)
 /* harmony export */ });
 var $ = function (selector, node) {
@@ -820,14 +873,13 @@ var isStringLengthInRange = function (value, min, max) {
     return value.length >= min && value.length <= max;
 };
 var isCorrectNumberUnit = function (value, unit) { return value % unit === 0; };
+var getSearchParamsParse = function (searchUrl) {
+    if (searchUrl === void 0) { searchUrl = ''; }
+    return "?".concat(searchUrl.split('?')[1]);
+};
 var getSearchParamsObject = function (searchUrl) {
     if (searchUrl === void 0) { searchUrl = ''; }
-    var searchString = "?".concat(searchUrl.split('?')[1]);
-    var searchParams = new URLSearchParams(searchString);
-    return Array.from(searchParams.keys()).reduce(function (previous, key) {
-        previous[key] = searchParams.get(key);
-        return previous;
-    }, {});
+    return Object.fromEntries(new URLSearchParams(searchUrl));
 };
 
 
