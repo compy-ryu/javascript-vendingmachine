@@ -89,7 +89,7 @@ var Router = /*#__PURE__*/function () {
 
     this.pageList = pageList;
     this.setEvents();
-    this.pageRender(this.pathname + (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsParse)(window.location.search));
+    this.pageRender((0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsParse)(window.location.search));
   }
 
   _createClass(Router, [{
