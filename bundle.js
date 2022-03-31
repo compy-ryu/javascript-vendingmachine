@@ -117,6 +117,8 @@ var Router = /*#__PURE__*/function () {
   }, {
     key: "pageRender",
     value: function pageRender(searchUrl) {
+      console.log(searchUrl);
+
       var _getSearchParamsObjec = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsObject)(searchUrl),
           _getSearchParamsObjec2 = _getSearchParamsObjec.page,
           page = _getSearchParamsObjec2 === void 0 ? 'product' : _getSearchParamsObjec2;
