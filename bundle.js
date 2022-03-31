@@ -12,7 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Header)
 /* harmony export */ });
-/* harmony import */ var _Utils_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Utils/index */ "./src/es/utils/index.ts");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils */ "./src/es/utils/index.ts");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -27,7 +27,7 @@ var Header = /*#__PURE__*/function () {
   function Header() {
     _classCallCheck(this, Header);
 
-    _defineProperty(this, "$container", (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('header'));
+    _defineProperty(this, "$container", (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('header'));
   }
 
   _createClass(Header, [{
@@ -39,8 +39,8 @@ var Header = /*#__PURE__*/function () {
     key: "drawNavigationMenu",
     value: function drawNavigationMenu(_ref) {
       var currentPage = _ref.currentPage;
-      (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('.nav .selected').classList.remove('selected');
-      var selectedMenu = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)(".nav-menu[data-route*=\"".concat(currentPage, "\"]"));
+      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('.nav .selected').classList.remove('selected');
+      var selectedMenu = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)(".nav-menu[data-route*=\"".concat(currentPage, "\"]"));
       selectedMenu.classList.add('selected');
     }
   }]);
@@ -62,8 +62,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Router)
 /* harmony export */ });
-/* harmony import */ var _Utils_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Utils/index */ "./src/es/utils/index.ts");
-/* harmony import */ var _Display_Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @Display/Header */ "./src/es/display/Header.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils */ "./src/es/utils/index.ts");
+/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Header */ "./src/es/display/Header.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -81,7 +81,7 @@ var Router = /*#__PURE__*/function () {
 
     _defineProperty(this, "pathname", window.location.pathname.slice(0, -1));
 
-    _defineProperty(this, "pageHeader", new _Display_Header__WEBPACK_IMPORTED_MODULE_1__["default"]());
+    _defineProperty(this, "pageHeader", new _Header__WEBPACK_IMPORTED_MODULE_1__["default"]());
 
     _defineProperty(this, "pageList", void 0);
 
@@ -89,7 +89,7 @@ var Router = /*#__PURE__*/function () {
 
     this.pageList = pageList;
     this.setEvents();
-    this.pageRender((0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsParse)(window.location.search));
+    this.pageRender((0,_utils__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsParse)(window.location.search));
   }
 
   _createClass(Router, [{
@@ -97,7 +97,7 @@ var Router = /*#__PURE__*/function () {
     value: function setEvents() {
       var _this = this;
 
-      (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('#app').addEventListener('click', function (event) {
+      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#app').addEventListener('click', function (event) {
         var routeURL = event.target.dataset.route;
         if (!routeURL) return;
 
@@ -110,14 +110,14 @@ var Router = /*#__PURE__*/function () {
   }, {
     key: "pushState",
     value: function pushState(searchUrl) {
-      var searchParams = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsParse)(searchUrl);
-      window.history.pushState((0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsObject)(searchParams), '', this.pathname + searchUrl);
+      var searchParams = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsParse)(searchUrl);
+      window.history.pushState((0,_utils__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsObject)(searchParams), '', this.pathname + searchUrl);
       this.pageRender(searchParams);
     }
   }, {
     key: "pageRender",
     value: function pageRender(searchUrl) {
-      var _getSearchParamsObjec = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsObject)(searchUrl),
+      var _getSearchParamsObjec = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsObject)(searchUrl),
           _getSearchParamsObjec2 = _getSearchParamsObjec.page,
           page = _getSearchParamsObjec2 === void 0 ? 'product' : _getSearchParamsObjec2;
 
@@ -147,10 +147,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ HoldingAmountPage)
 /* harmony export */ });
-/* harmony import */ var _Utils_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Utils/index */ "./src/es/utils/index.ts");
-/* harmony import */ var _Utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @Utils/VendingMachine/validator */ "./src/es/utils/VendingMachine/validator.ts");
-/* harmony import */ var _Store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @Store/HoldingAmountStore */ "./src/es/store/HoldingAmountStore.ts");
-/* harmony import */ var _Display_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @Display/template */ "./src/es/display/template.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils */ "./src/es/utils/index.ts");
+/* harmony import */ var _utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/VendingMachine/validator */ "./src/es/utils/VendingMachine/validator.ts");
+/* harmony import */ var _store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../store/HoldingAmountStore */ "./src/es/store/HoldingAmountStore.ts");
+/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../template */ "./src/es/display/template.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -181,12 +181,12 @@ var HoldingAmountPage = /*#__PURE__*/function () {
     _defineProperty(this, "$table", void 0);
 
     _defineProperty(this, "mountPage", function () {
-      (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('main').innerHTML = _Display_template__WEBPACK_IMPORTED_MODULE_3__.template.holdingAmountPage;
+      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('main').innerHTML = _template__WEBPACK_IMPORTED_MODULE_3__.template.holdingAmountPage;
 
       _this.setDom();
 
       _this.render({
-        state: _Store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
+        state: _store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
         changedStateNames: Object.keys(_this.renderMethodList)
       });
 
@@ -209,16 +209,16 @@ var HoldingAmountPage = /*#__PURE__*/function () {
     });
 
     _defineProperty(this, "drawTotalHoldingAmount", function () {
-      var totalAmount = _Store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].getTotalAmount();
-      (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('#total-holding-amount', _this.$addFormSection).innerText = "".concat(totalAmount.toLocaleString(), "\uC6D0");
+      var totalAmount = _store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].getTotalAmount();
+      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#total-holding-amount', _this.$addFormSection).innerText = "".concat(totalAmount.toLocaleString(), "\uC6D0");
     });
 
     _defineProperty(this, "drawHoldingAmountList", function (_ref2) {
       var coins = _ref2.coins;
-      (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('tbody', _this.$table).innerHTML = _Display_template__WEBPACK_IMPORTED_MODULE_3__.template.holdingAmountTableRows(coins);
+      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('tbody', _this.$table).innerHTML = _template__WEBPACK_IMPORTED_MODULE_3__.template.holdingAmountTableRows(coins);
     });
 
-    _Store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber(this.render);
+    _store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber(this.render);
     this.setRenderMethodList();
   }
 
@@ -233,10 +233,10 @@ var HoldingAmountPage = /*#__PURE__*/function () {
   }, {
     key: "setDom",
     value: function setDom() {
-      this.$addFormSection = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('#add-holding-amount-form-section');
-      this.$addForm = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('#add-holding-amount-form', this.$addFormSection);
-      this.$tableSection = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('#holding-amount-table-section');
-      this.$table = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('#holding-amount-table', this.$tableSection);
+      this.$addFormSection = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#add-holding-amount-form-section');
+      this.$addForm = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#add-holding-amount-form', this.$addFormSection);
+      this.$tableSection = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#holding-amount-table-section');
+      this.$table = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#holding-amount-table', this.$tableSection);
     }
   }, {
     key: "setRenderMethodList",
@@ -254,17 +254,17 @@ var HoldingAmountPage = /*#__PURE__*/function () {
     key: "onSubmitAddHoldingAmountForm",
     value: function onSubmitAddHoldingAmountForm(event) {
       event.preventDefault();
-      var $input = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('input[name="add-holding-amount"]', event.target);
-      var totalAmount = _Store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].getTotalAmount();
+      var $input = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('input[name="add-holding-amount"]', event.target);
+      var totalAmount = _store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].getTotalAmount();
 
       try {
-        (0,_Utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__.validateHoldingAmountToAdd)(Number($input.value), totalAmount);
+        (0,_utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__.validateHoldingAmountToAdd)(Number($input.value), totalAmount);
       } catch (error) {
         alert(error.message);
         return;
       }
 
-      _Store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].addAmount($input.value);
+      _store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].addAmount($input.value);
       $input.value = '';
     }
   }]);
@@ -286,10 +286,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ ProductPage)
 /* harmony export */ });
-/* harmony import */ var _Utils_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Utils/index */ "./src/es/utils/index.ts");
-/* harmony import */ var _Utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @Utils/VendingMachine/validator */ "./src/es/utils/VendingMachine/validator.ts");
-/* harmony import */ var _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @Store/ProductStore */ "./src/es/store/ProductStore.ts");
-/* harmony import */ var _Display_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @Display/template */ "./src/es/display/template.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils */ "./src/es/utils/index.ts");
+/* harmony import */ var _utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/VendingMachine/validator */ "./src/es/utils/VendingMachine/validator.ts");
+/* harmony import */ var _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../store/ProductStore */ "./src/es/store/ProductStore.ts");
+/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../template */ "./src/es/display/template.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -320,12 +320,12 @@ var ProductPage = /*#__PURE__*/function () {
     _defineProperty(this, "$table", void 0);
 
     _defineProperty(this, "mountPage", function () {
-      (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('main').innerHTML = _Display_template__WEBPACK_IMPORTED_MODULE_3__.template.productPage;
+      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('main').innerHTML = _template__WEBPACK_IMPORTED_MODULE_3__.template.productPage;
 
       _this.setDom();
 
       _this.render({
-        state: _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
+        state: _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
         changedStateNames: Object.keys(_this.renderMethodList)
       });
 
@@ -349,11 +349,11 @@ var ProductPage = /*#__PURE__*/function () {
 
     _defineProperty(this, "drawProductList", function (_ref2) {
       var products = _ref2.products;
-      var productItem = _Display_template__WEBPACK_IMPORTED_MODULE_3__.template.productTableRows(products);
-      (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('tbody', _this.$table).innerHTML = productItem;
+      var productItem = _template__WEBPACK_IMPORTED_MODULE_3__.template.productTableRows(products);
+      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('tbody', _this.$table).innerHTML = productItem;
     });
 
-    _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber(this.render);
+    _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber(this.render);
     this.setRenderMethodList();
   }
 
@@ -368,10 +368,10 @@ var ProductPage = /*#__PURE__*/function () {
   }, {
     key: "setDom",
     value: function setDom() {
-      this.$addFormSection = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('#add-product-form-section');
-      this.$addForm = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('#add-product-form', this.$addFormSection);
-      this.$tableSection = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('#product-table-section');
-      this.$table = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$)('#product-table', this.$tableSection);
+      this.$addFormSection = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#add-product-form-section');
+      this.$addForm = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#add-product-form', this.$addFormSection);
+      this.$tableSection = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#product-table-section');
+      this.$table = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#product-table', this.$tableSection);
     }
   }, {
     key: "setRenderMethodList",
@@ -408,23 +408,23 @@ var ProductPage = /*#__PURE__*/function () {
     key: "onSubmitAddProductForm",
     value: function onSubmitAddProductForm(event) {
       event.preventDefault();
-      var $$inputs = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$$)('input', event.target);
+      var $$inputs = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$$)('input', event.target);
       var product = Array.from($$inputs).reduce(function (previous, inputElement) {
         previous[inputElement.name] = inputElement.type === 'number' ? Number(inputElement.value) : inputElement.value;
         return previous;
       }, {});
 
       try {
-        (0,_Utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__.validateProduct)(product);
+        (0,_utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__.validateProduct)(product);
       } catch (error) {
         alert(error.message);
         return;
       }
 
-      var productIndex = _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].findProductIndexByName(product.name);
+      var productIndex = _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].findProductIndexByName(product.name);
 
       if (productIndex === -1) {
-        _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].addProduct(product);
+        _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].addProduct(product);
         $$inputs.forEach(function ($input) {
           return $input.value = '';
         });
@@ -432,7 +432,7 @@ var ProductPage = /*#__PURE__*/function () {
       }
 
       if (confirm('이미 존재하는 상품입니다.\n기존 상품 목록에서 덮어씌우시겠습니까?')) {
-        _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].updateProduct(productIndex, product);
+        _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].updateProduct(productIndex, product);
       }
     }
   }, {
@@ -443,10 +443,10 @@ var ProductPage = /*#__PURE__*/function () {
       if (!$tableRow) return;
       var productIndex = $tableRow.dataset.primaryKey;
 
-      var _ProductStore$getStat = _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
+      var _ProductStore$getStat = _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
           products = _ProductStore$getStat.products;
 
-      $tableRow.innerHTML = _Display_template__WEBPACK_IMPORTED_MODULE_3__.template.productTableRowUpdate(products[productIndex]);
+      $tableRow.innerHTML = _template__WEBPACK_IMPORTED_MODULE_3__.template.productTableRowUpdate(products[productIndex]);
     }
   }, {
     key: "onClickUpdateConfirmButton",
@@ -455,19 +455,19 @@ var ProductPage = /*#__PURE__*/function () {
       var $tableRow = $target.closest('tr[data-primary-key]');
       if (!$tableRow) return;
       var productIndex = $tableRow.dataset.primaryKey;
-      var product = Array.from((0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.$$)('input', $tableRow)).reduce(function (previous, inputElement) {
+      var product = Array.from((0,_utils__WEBPACK_IMPORTED_MODULE_0__.$$)('input', $tableRow)).reduce(function (previous, inputElement) {
         previous[inputElement.name] = inputElement.type === 'number' ? Number(inputElement.value) : inputElement.value;
         return previous;
       }, {});
 
       try {
-        (0,_Utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__.validateProduct)(product);
+        (0,_utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__.validateProduct)(product);
       } catch (error) {
         alert(error.message);
         return;
       }
 
-      _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].updateProduct(productIndex, product);
+      _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].updateProduct(productIndex, product);
     }
   }, {
     key: "onClickUpdateCancelButton",
@@ -477,10 +477,10 @@ var ProductPage = /*#__PURE__*/function () {
       if (!$tableRow) return;
       var productIndex = $tableRow.dataset.primaryKey;
 
-      var _ProductStore$getStat2 = _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
+      var _ProductStore$getStat2 = _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
           products = _ProductStore$getStat2.products;
 
-      $tableRow.innerHTML = _Display_template__WEBPACK_IMPORTED_MODULE_3__.template.productTableRowInners(products[productIndex]);
+      $tableRow.innerHTML = _template__WEBPACK_IMPORTED_MODULE_3__.template.productTableRowInners(products[productIndex]);
     }
   }, {
     key: "onClickDeleteButton",
@@ -490,7 +490,7 @@ var ProductPage = /*#__PURE__*/function () {
       var $tableRow = $target.closest('tr[data-primary-key]');
       if (!$tableRow) return;
       var productIndex = $tableRow.dataset.primaryKey;
-      _Store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].updateProduct(productIndex);
+      _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].updateProduct(productIndex);
     }
   }]);
 
@@ -511,7 +511,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "template": () => (/* binding */ template)
 /* harmony export */ });
-/* harmony import */ var _Constants_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Constants/index */ "./src/es/constants/index.ts");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./src/es/constants/index.ts");
 
 var template = {
   productPage: "\n  <section id=\"add-product-form-section\" class=\"form-section\">\n    <form id=\"add-product-form\">\n        <label form=\"add-product-form\">\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</label>\n        <div class=\"add-product-input-wrap\">\n            <input type=\"text\" name=\"name\" placeholder=\"\uC0C1\uD488\uBA85\" form=\"add-product-form\" required>\n            <input type=\"number\" name=\"price\" placeholder=\"\uAC00\uACA9\" form=\"add-product-form\" required>\n            <input type=\"number\" name=\"quantity\" placeholder=\"\uC218\uB7C9\" form=\"add-product-form\" required>\n            <button id=\"add-product-submit-button\" class=\"button accent\">\uCD94\uAC00</button>\n        </div>\n    </form>\n  </section>\n  <section id=\"product-table-section\" class=\"table-section\">\n    <table id=\"product-table\" class=\"table\">\n        <caption>\uC0C1\uD488 \uD604\uD669</caption>\n        <thead>\n            <tr>\n                <th width=\"22%\">\uC0C1\uD488\uBA85</th>\n                <th width=\"22%\">\uAC00\uACA9</th>\n                <th width=\"22%\">\uC218\uB7C9</th>\n                <th width=\"34%\"></th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n            </tr>\n        </tbody>\n    </table>\n  </section>\n  ",
@@ -542,7 +542,7 @@ var template = {
   },
   holdingAmountTableRows: function holdingAmountTableRows(coins) {
     return coins.map(function (coin, index) {
-      return "\n      <tr>\n        <td>".concat(_Constants_index__WEBPACK_IMPORTED_MODULE_0__.COIN_TYPE[index], "\uC6D0</td>\n        <td>").concat(coin.toLocaleString(), "\uAC1C</td>\n      </tr>");
+      return "\n      <tr>\n        <td>".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.COIN_TYPE[index], "\uC6D0</td>\n        <td>").concat(coin.toLocaleString(), "\uAC1C</td>\n      </tr>");
     }).join('');
   }
 };
@@ -659,8 +659,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Utils_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Utils/index */ "./src/es/utils/index.ts");
-/* harmony import */ var _Constants_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @Constants/index */ "./src/es/constants/index.ts");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./src/es/constants/index.ts");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils */ "./src/es/utils/index.ts");
 /* harmony import */ var _Abstract__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Abstract */ "./src/es/store/Abstract.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -690,17 +690,17 @@ var HoldingAmountStore = /** @class */ (function (_super) {
         return _this;
     }
     HoldingAmountStore.prototype.getTotalAmount = function () {
-        return this.state.coins.reduce(function (previous, coin, index) { return (previous += _Constants_index__WEBPACK_IMPORTED_MODULE_1__.COIN_TYPE[index] * coin); }, 0);
+        return this.state.coins.reduce(function (previous, coin, index) { return (previous += _constants__WEBPACK_IMPORTED_MODULE_0__.COIN_TYPE[index] * coin); }, 0);
     };
     HoldingAmountStore.prototype.getMaxCoinIndex = function (baseAmount) {
-        return _Constants_index__WEBPACK_IMPORTED_MODULE_1__.COIN_TYPE.findIndex(function (coin) { return baseAmount >= coin; });
+        return _constants__WEBPACK_IMPORTED_MODULE_0__.COIN_TYPE.findIndex(function (coin) { return baseAmount >= coin; });
     };
     HoldingAmountStore.prototype.getRandomCoinsFromAmount = function (amount) {
         var leftAmount = amount;
         var randomCoins = [0, 0, 0, 0];
         while (leftAmount > 0) {
-            var coinIndex = (0,_Utils_index__WEBPACK_IMPORTED_MODULE_0__.getRandomNumber)(this.getMaxCoinIndex(leftAmount), _Constants_index__WEBPACK_IMPORTED_MODULE_1__.COIN_TYPE.length - 1);
-            var randomCoin = _Constants_index__WEBPACK_IMPORTED_MODULE_1__.COIN_TYPE[coinIndex];
+            var coinIndex = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getRandomNumber)(this.getMaxCoinIndex(leftAmount), _constants__WEBPACK_IMPORTED_MODULE_0__.COIN_TYPE.length - 1);
+            var randomCoin = _constants__WEBPACK_IMPORTED_MODULE_0__.COIN_TYPE[coinIndex];
             randomCoins[coinIndex] += 1;
             leftAmount -= randomCoin;
         }
@@ -801,37 +801,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "validateProduct": () => (/* binding */ validateProduct),
 /* harmony export */   "validateHoldingAmountToAdd": () => (/* binding */ validateHoldingAmountToAdd)
 /* harmony export */ });
-/* harmony import */ var _Constants_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Constants/index */ "./src/es/constants/index.ts");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants */ "./src/es/constants/index.ts");
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../index */ "./src/es/utils/index.ts");
 
 
 var validateProduct = function (product) {
     var name = product.name, price = product.price, quantity = product.quantity;
-    var MIN_PRODUCT_NAME = _Constants_index__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MIN_PRODUCT_NAME, MAX_PRODUCT_NAME = _Constants_index__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MAX_PRODUCT_NAME, MIN_PRODUCT_PRICE = _Constants_index__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MIN_PRODUCT_PRICE, MAX_PRODUCT_PRICE = _Constants_index__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MAX_PRODUCT_PRICE, MONEY_UNIT = _Constants_index__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MONEY_UNIT, MIN_PRODUCT_QUANTITY = _Constants_index__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MIN_PRODUCT_QUANTITY, MAX_PRODUCT_QUANTITY = _Constants_index__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MAX_PRODUCT_QUANTITY;
+    var MIN_PRODUCT_NAME = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MIN_PRODUCT_NAME, MAX_PRODUCT_NAME = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MAX_PRODUCT_NAME, MIN_PRODUCT_PRICE = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MIN_PRODUCT_PRICE, MAX_PRODUCT_PRICE = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MAX_PRODUCT_PRICE, MONEY_UNIT = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MONEY_UNIT, MIN_PRODUCT_QUANTITY = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MIN_PRODUCT_QUANTITY, MAX_PRODUCT_QUANTITY = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MAX_PRODUCT_QUANTITY;
     if (name === '')
-        throw new Error(_Constants_index__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_NAME_REQUIRED);
+        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_NAME_REQUIRED);
     if (!(0,_index__WEBPACK_IMPORTED_MODULE_1__.isStringLengthInRange)(name, MIN_PRODUCT_NAME, MAX_PRODUCT_NAME))
-        throw new Error(_Constants_index__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_NAME_LENGTH);
+        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_NAME_LENGTH);
     if (!Number.isInteger(price))
-        throw new Error(_Constants_index__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_PRICE_ONLY_NUMBER);
+        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_PRICE_ONLY_NUMBER);
     if (!(0,_index__WEBPACK_IMPORTED_MODULE_1__.isNumberInRange)(price, MIN_PRODUCT_PRICE, MAX_PRODUCT_PRICE))
-        throw new Error(_Constants_index__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_PRICE_WRONG_RANGE);
+        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_PRICE_WRONG_RANGE);
     if (!(0,_index__WEBPACK_IMPORTED_MODULE_1__.isCorrectNumberUnit)(price, MONEY_UNIT))
-        throw new Error(_Constants_index__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_PRICE_WRONG_UNIT);
+        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_PRICE_WRONG_UNIT);
     if (!Number.isInteger(quantity))
-        throw new Error(_Constants_index__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_QUANTITY_ONLY_NUMBER);
+        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_QUANTITY_ONLY_NUMBER);
     if (!(0,_index__WEBPACK_IMPORTED_MODULE_1__.isNumberInRange)(quantity, MIN_PRODUCT_QUANTITY, MAX_PRODUCT_QUANTITY))
-        throw new Error(_Constants_index__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_QUANTITY_WRONG_RANGE);
+        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_QUANTITY_WRONG_RANGE);
     return true;
 };
 var validateHoldingAmountToAdd = function (holdingAmountToAdd, totalAmount) {
-    var MAX_HOLDING_AMOUNT = _Constants_index__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MAX_HOLDING_AMOUNT, MONEY_UNIT = _Constants_index__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MONEY_UNIT;
+    var MAX_HOLDING_AMOUNT = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MAX_HOLDING_AMOUNT, MONEY_UNIT = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MONEY_UNIT;
     if (!Number.isInteger(holdingAmountToAdd))
-        throw new Error(_Constants_index__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.HOLDING_AMOUNT_ONLY_NUMBER);
+        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.HOLDING_AMOUNT_ONLY_NUMBER);
     if (!(0,_index__WEBPACK_IMPORTED_MODULE_1__.isCorrectNumberUnit)(holdingAmountToAdd, MONEY_UNIT))
-        throw new Error(_Constants_index__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.HOLDING_AMOUNT_WRONG_UNIT);
+        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.HOLDING_AMOUNT_WRONG_UNIT);
     if (holdingAmountToAdd + totalAmount > MAX_HOLDING_AMOUNT)
-        throw new Error(_Constants_index__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.HOLDING_AMOUNT_WRONG_LIMIT);
+        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.HOLDING_AMOUNT_WRONG_LIMIT);
     return true;
 };
 
@@ -948,17 +948,17 @@ var __webpack_exports__ = {};
   !*** ./src/index.ts ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @Styles */ "./src/styles/index.scss");
-/* harmony import */ var _Display_Router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @Display/Router */ "./src/es/display/Router.js");
-/* harmony import */ var _Display_pages_ProductPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @Display/pages/ProductPage */ "./src/es/display/pages/ProductPage.js");
-/* harmony import */ var _Display_pages_HoldingAmountPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @Display/pages/HoldingAmountPage */ "./src/es/display/pages/HoldingAmountPage.js");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles */ "./src/styles/index.scss");
+/* harmony import */ var _es_display_pages_ProductPage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./es/display/pages/ProductPage */ "./src/es/display/pages/ProductPage.js");
+/* harmony import */ var _es_display_pages_HoldingAmountPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./es/display/pages/HoldingAmountPage */ "./src/es/display/pages/HoldingAmountPage.js");
+/* harmony import */ var _es_display_Router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./es/display/Router */ "./src/es/display/Router.js");
 
 
 
 
-new _Display_Router__WEBPACK_IMPORTED_MODULE_1__["default"]({
-    product: new _Display_pages_ProductPage__WEBPACK_IMPORTED_MODULE_2__["default"](),
-    holding_amount: new _Display_pages_HoldingAmountPage__WEBPACK_IMPORTED_MODULE_3__["default"]()
+new _es_display_Router__WEBPACK_IMPORTED_MODULE_3__["default"]({
+    product: new _es_display_pages_ProductPage__WEBPACK_IMPORTED_MODULE_1__["default"](),
+    holding_amount: new _es_display_pages_HoldingAmountPage__WEBPACK_IMPORTED_MODULE_2__["default"]()
 });
 
 })();
