@@ -1,5 +1,5 @@
 /*!***********************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/utils/resetStyle.css ***!
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/Styles/utils/resetStyle.css ***!
   \***********************************************************************************/
 html,
 body,
@@ -127,7 +127,7 @@ table {
 }
 
 /*!***********************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/Font.css ***!
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/Styles/Font.css ***!
   \***********************************************************************/
 @font-face {
   font-family: 'NanumBarunGothic';
@@ -163,7 +163,7 @@ table {
 }
 
 /*!****************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/index.scss ***!
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/Styles/index.scss ***!
   \****************************************************************************************************************/
 @charset "UTF-8";
 /*

@@ -2,556 +2,9 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/es/display/Header.js":
-/*!**********************************!*\
-  !*** ./src/es/display/Header.js ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Header)
-/* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils */ "./src/es/utils/index.ts");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-var Header = /*#__PURE__*/function () {
-  function Header() {
-    _classCallCheck(this, Header);
-
-    _defineProperty(this, "$container", (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('header'));
-  }
-
-  _createClass(Header, [{
-    key: "render",
-    value: function render(state) {
-      this.drawNavigationMenu(state);
-    }
-  }, {
-    key: "drawNavigationMenu",
-    value: function drawNavigationMenu(_ref) {
-      var currentPage = _ref.currentPage;
-      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('.nav .selected').classList.remove('selected');
-      var selectedMenu = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)(".nav-menu[data-route*=\"".concat(currentPage, "\"]"));
-      selectedMenu.classList.add('selected');
-    }
-  }]);
-
-  return Header;
-}();
-
-
-
-/***/ }),
-
-/***/ "./src/es/display/Router.js":
-/*!**********************************!*\
-  !*** ./src/es/display/Router.js ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Router)
-/* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils */ "./src/es/utils/index.ts");
-/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Header */ "./src/es/display/Header.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-var Router = /*#__PURE__*/function () {
-  function Router(pageList) {
-    _classCallCheck(this, Router);
-
-    _defineProperty(this, "pathname", window.location.pathname.slice(0, -1));
-
-    _defineProperty(this, "pageHeader", new _Header__WEBPACK_IMPORTED_MODULE_1__["default"]());
-
-    _defineProperty(this, "pageList", void 0);
-
-    _defineProperty(this, "previousPage", void 0);
-
-    this.pageList = pageList;
-    this.setEvents();
-    this.pageRender((0,_utils__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsParse)(window.location.search));
-  }
-
-  _createClass(Router, [{
-    key: "setEvents",
-    value: function setEvents() {
-      var _this = this;
-
-      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#app').addEventListener('click', function (event) {
-        var routeURL = event.target.dataset.route;
-        if (!routeURL) return;
-
-        _this.pushState(routeURL);
-      });
-      window.addEventListener('popstate', function () {
-        _this.pageRender(window.location.search);
-      });
-    }
-  }, {
-    key: "pushState",
-    value: function pushState(searchUrl) {
-      var searchParams = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsParse)(searchUrl);
-      window.history.pushState((0,_utils__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsObject)(searchParams), '', this.pathname + searchUrl);
-      this.pageRender(searchParams);
-    }
-  }, {
-    key: "pageRender",
-    value: function pageRender(searchUrl) {
-      var _getSearchParamsObjec = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getSearchParamsObject)(searchUrl),
-          _getSearchParamsObjec2 = _getSearchParamsObjec.page,
-          page = _getSearchParamsObjec2 === void 0 ? 'product' : _getSearchParamsObjec2;
-
-      this.pageHeader.render({
-        currentPage: page
-      });
-      !!this.pageList[page] && this.pageList[page].mountPage();
-      this.previousPage && this.previousPage.unmountPage();
-      this.previousPage = this.pageList[page];
-    }
-  }]);
-
-  return Router;
-}();
-
-
-
-/***/ }),
-
-/***/ "./src/es/display/pages/HoldingAmountPage.js":
-/*!***************************************************!*\
-  !*** ./src/es/display/pages/HoldingAmountPage.js ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ HoldingAmountPage)
-/* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils */ "./src/es/utils/index.ts");
-/* harmony import */ var _utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/VendingMachine/validator */ "./src/es/utils/VendingMachine/validator.ts");
-/* harmony import */ var _store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../store/HoldingAmountStore */ "./src/es/store/HoldingAmountStore.ts");
-/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../template */ "./src/es/display/template.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
-
-var HoldingAmountPage = /*#__PURE__*/function () {
-  function HoldingAmountPage() {
-    var _this = this;
-
-    _classCallCheck(this, HoldingAmountPage);
-
-    _defineProperty(this, "renderMethodList", void 0);
-
-    _defineProperty(this, "$addFormSection", void 0);
-
-    _defineProperty(this, "$addForm", void 0);
-
-    _defineProperty(this, "$tableSection", void 0);
-
-    _defineProperty(this, "$table", void 0);
-
-    _defineProperty(this, "mountPage", function () {
-      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('main').innerHTML = _template__WEBPACK_IMPORTED_MODULE_3__.template.holdingAmountPage;
-
-      _this.setDom();
-
-      _this.render({
-        state: _store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
-        changedStateNames: Object.keys(_this.renderMethodList)
-      });
-
-      _this.setEvents();
-    });
-
-    _defineProperty(this, "render", function (_ref) {
-      var state = _ref.state,
-          changedStateNames = _ref.changedStateNames;
-      var renderTargetMethod = changedStateNames.reduce(function (previous, stateKey) {
-        _this.renderMethodList[stateKey].forEach(function (renderMethod) {
-          return previous.add(renderMethod);
-        });
-
-        return previous;
-      }, new Set());
-      renderTargetMethod.forEach(function (renderMethod) {
-        return renderMethod(state);
-      });
-    });
-
-    _defineProperty(this, "drawTotalHoldingAmount", function () {
-      var totalAmount = _store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].getTotalAmount();
-      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#total-holding-amount', _this.$addFormSection).innerText = "".concat(totalAmount.toLocaleString(), "\uC6D0");
-    });
-
-    _defineProperty(this, "drawHoldingAmountList", function (_ref2) {
-      var coins = _ref2.coins;
-      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('tbody', _this.$table).innerHTML = _template__WEBPACK_IMPORTED_MODULE_3__.template.holdingAmountTableRows(coins);
-    });
-
-    _store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber(this.render);
-    this.setRenderMethodList();
-  }
-
-  _createClass(HoldingAmountPage, [{
-    key: "unmountPage",
-    value: function unmountPage() {
-      this.$addForm = null;
-      this.$addFormSection = null;
-      this.$tableSection = null;
-      this.$table = null;
-    }
-  }, {
-    key: "setDom",
-    value: function setDom() {
-      this.$addFormSection = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#add-holding-amount-form-section');
-      this.$addForm = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#add-holding-amount-form', this.$addFormSection);
-      this.$tableSection = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#holding-amount-table-section');
-      this.$table = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#holding-amount-table', this.$tableSection);
-    }
-  }, {
-    key: "setRenderMethodList",
-    value: function setRenderMethodList() {
-      this.renderMethodList = {
-        coins: [this.drawTotalHoldingAmount, this.drawHoldingAmountList]
-      };
-    }
-  }, {
-    key: "setEvents",
-    value: function setEvents() {
-      this.$addForm.addEventListener('submit', this.onSubmitAddHoldingAmountForm);
-    }
-  }, {
-    key: "onSubmitAddHoldingAmountForm",
-    value: function onSubmitAddHoldingAmountForm(event) {
-      event.preventDefault();
-      var $input = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('input[name="add-holding-amount"]', event.target);
-      var totalAmount = _store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].getTotalAmount();
-
-      try {
-        (0,_utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__.validateHoldingAmountToAdd)(Number($input.value), totalAmount);
-      } catch (error) {
-        alert(error.message);
-        return;
-      }
-
-      _store_HoldingAmountStore__WEBPACK_IMPORTED_MODULE_2__["default"].addAmount($input.value);
-      $input.value = '';
-    }
-  }]);
-
-  return HoldingAmountPage;
-}();
-
-
-
-/***/ }),
-
-/***/ "./src/es/display/pages/ProductPage.js":
-/*!*********************************************!*\
-  !*** ./src/es/display/pages/ProductPage.js ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ProductPage)
-/* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils */ "./src/es/utils/index.ts");
-/* harmony import */ var _utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/VendingMachine/validator */ "./src/es/utils/VendingMachine/validator.ts");
-/* harmony import */ var _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../store/ProductStore */ "./src/es/store/ProductStore.ts");
-/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../template */ "./src/es/display/template.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
-
-var ProductPage = /*#__PURE__*/function () {
-  function ProductPage() {
-    var _this = this;
-
-    _classCallCheck(this, ProductPage);
-
-    _defineProperty(this, "renderMethodList", void 0);
-
-    _defineProperty(this, "$addFormSection", void 0);
-
-    _defineProperty(this, "$addForm", void 0);
-
-    _defineProperty(this, "$tableSection", void 0);
-
-    _defineProperty(this, "$table", void 0);
-
-    _defineProperty(this, "mountPage", function () {
-      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('main').innerHTML = _template__WEBPACK_IMPORTED_MODULE_3__.template.productPage;
-
-      _this.setDom();
-
-      _this.render({
-        state: _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
-        changedStateNames: Object.keys(_this.renderMethodList)
-      });
-
-      _this.setEvents();
-    });
-
-    _defineProperty(this, "render", function (_ref) {
-      var state = _ref.state,
-          changedStateNames = _ref.changedStateNames;
-      var renderTargetMethod = changedStateNames.reduce(function (previous, stateKey) {
-        _this.renderMethodList[stateKey].forEach(function (renderMethod) {
-          return previous.add(renderMethod);
-        });
-
-        return previous;
-      }, new Set());
-      renderTargetMethod.forEach(function (renderMethod) {
-        return renderMethod(state);
-      });
-    });
-
-    _defineProperty(this, "drawProductList", function (_ref2) {
-      var products = _ref2.products;
-      var productItem = _template__WEBPACK_IMPORTED_MODULE_3__.template.productTableRows(products);
-      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('tbody', _this.$table).innerHTML = productItem;
-    });
-
-    _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].addSubscriber(this.render);
-    this.setRenderMethodList();
-  }
-
-  _createClass(ProductPage, [{
-    key: "unmountPage",
-    value: function unmountPage() {
-      this.$addForm = null;
-      this.$addFormSection = null;
-      this.$tableSection = null;
-      this.$table = null;
-    }
-  }, {
-    key: "setDom",
-    value: function setDom() {
-      this.$addFormSection = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#add-product-form-section');
-      this.$addForm = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#add-product-form', this.$addFormSection);
-      this.$tableSection = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#product-table-section');
-      this.$table = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$)('#product-table', this.$tableSection);
-    }
-  }, {
-    key: "setRenderMethodList",
-    value: function setRenderMethodList() {
-      this.renderMethodList = {
-        products: [this.drawProductList]
-      };
-    }
-  }, {
-    key: "setEvents",
-    value: function setEvents() {
-      var _this2 = this;
-
-      this.$addForm.addEventListener('submit', this.onSubmitAddProductForm);
-      this.$table.addEventListener('click', function (event) {
-        if (event.target.classList.contains('product-update-button')) {
-          _this2.onClickUpdateButton(event);
-        }
-
-        if (event.target.classList.contains('product-update-confirm-button')) {
-          _this2.onClickUpdateConfirmButton(event);
-        }
-
-        if (event.target.classList.contains('product-update-cancel-button')) {
-          _this2.onClickUpdateCancelButton(event);
-        }
-
-        if (event.target.classList.contains('product-delete-button')) {
-          _this2.onClickDeleteButton(event);
-        }
-      });
-    }
-  }, {
-    key: "onSubmitAddProductForm",
-    value: function onSubmitAddProductForm(event) {
-      event.preventDefault();
-      var $$inputs = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.$$)('input', event.target);
-      var product = Array.from($$inputs).reduce(function (previous, inputElement) {
-        previous[inputElement.name] = inputElement.type === 'number' ? Number(inputElement.value) : inputElement.value;
-        return previous;
-      }, {});
-
-      try {
-        (0,_utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__.validateProduct)(product);
-      } catch (error) {
-        alert(error.message);
-        return;
-      }
-
-      var productIndex = _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].findProductIndexByName(product.name);
-
-      if (productIndex === -1) {
-        _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].addProduct(product);
-        $$inputs.forEach(function ($input) {
-          return $input.value = '';
-        });
-        return;
-      }
-
-      if (confirm('이미 존재하는 상품입니다.\n기존 상품 목록에서 덮어씌우시겠습니까?')) {
-        _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].updateProduct(productIndex, product);
-      }
-    }
-  }, {
-    key: "onClickUpdateButton",
-    value: function onClickUpdateButton(_ref3) {
-      var $target = _ref3.target;
-      var $tableRow = $target.closest('tr[data-primary-key]');
-      if (!$tableRow) return;
-      var productIndex = $tableRow.dataset.primaryKey;
-
-      var _ProductStore$getStat = _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
-          products = _ProductStore$getStat.products;
-
-      $tableRow.innerHTML = _template__WEBPACK_IMPORTED_MODULE_3__.template.productTableRowUpdate(products[productIndex]);
-    }
-  }, {
-    key: "onClickUpdateConfirmButton",
-    value: function onClickUpdateConfirmButton(_ref4) {
-      var $target = _ref4.target;
-      var $tableRow = $target.closest('tr[data-primary-key]');
-      if (!$tableRow) return;
-      var productIndex = $tableRow.dataset.primaryKey;
-      var product = Array.from((0,_utils__WEBPACK_IMPORTED_MODULE_0__.$$)('input', $tableRow)).reduce(function (previous, inputElement) {
-        previous[inputElement.name] = inputElement.type === 'number' ? Number(inputElement.value) : inputElement.value;
-        return previous;
-      }, {});
-
-      try {
-        (0,_utils_VendingMachine_validator__WEBPACK_IMPORTED_MODULE_1__.validateProduct)(product);
-      } catch (error) {
-        alert(error.message);
-        return;
-      }
-
-      _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].updateProduct(productIndex, product);
-    }
-  }, {
-    key: "onClickUpdateCancelButton",
-    value: function onClickUpdateCancelButton(_ref5) {
-      var $target = _ref5.target;
-      var $tableRow = $target.closest('tr[data-primary-key]');
-      if (!$tableRow) return;
-      var productIndex = $tableRow.dataset.primaryKey;
-
-      var _ProductStore$getStat2 = _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].getState(),
-          products = _ProductStore$getStat2.products;
-
-      $tableRow.innerHTML = _template__WEBPACK_IMPORTED_MODULE_3__.template.productTableRowInners(products[productIndex]);
-    }
-  }, {
-    key: "onClickDeleteButton",
-    value: function onClickDeleteButton(_ref6) {
-      var $target = _ref6.target;
-      if (!confirm('정말 해당 상품을 삭제하시겠습니까?')) return;
-      var $tableRow = $target.closest('tr[data-primary-key]');
-      if (!$tableRow) return;
-      var productIndex = $tableRow.dataset.primaryKey;
-      _store_ProductStore__WEBPACK_IMPORTED_MODULE_2__["default"].updateProduct(productIndex);
-    }
-  }]);
-
-  return ProductPage;
-}();
-
-
-
-/***/ }),
-
-/***/ "./src/es/display/template.js":
-/*!************************************!*\
-  !*** ./src/es/display/template.js ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "template": () => (/* binding */ template)
-/* harmony export */ });
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./src/es/constants/index.ts");
-
-var template = {
-  productPage: "\n  <section id=\"add-product-form-section\" class=\"form-section\">\n    <form id=\"add-product-form\">\n        <label form=\"add-product-form\">\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</label>\n        <div class=\"add-product-input-wrap\">\n            <input type=\"text\" name=\"name\" placeholder=\"\uC0C1\uD488\uBA85\" form=\"add-product-form\" required>\n            <input type=\"number\" name=\"price\" placeholder=\"\uAC00\uACA9\" form=\"add-product-form\" required>\n            <input type=\"number\" name=\"quantity\" placeholder=\"\uC218\uB7C9\" form=\"add-product-form\" required>\n            <button id=\"add-product-submit-button\" class=\"button accent\">\uCD94\uAC00</button>\n        </div>\n    </form>\n  </section>\n  <section id=\"product-table-section\" class=\"table-section\">\n    <table id=\"product-table\" class=\"table\">\n        <caption>\uC0C1\uD488 \uD604\uD669</caption>\n        <thead>\n            <tr>\n                <th width=\"22%\">\uC0C1\uD488\uBA85</th>\n                <th width=\"22%\">\uAC00\uACA9</th>\n                <th width=\"22%\">\uC218\uB7C9</th>\n                <th width=\"34%\"></th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n            </tr>\n        </tbody>\n    </table>\n  </section>\n  ",
-  holdingAmountPage: "\n  <section id=\"add-holding-amount-form-section\" class=\"form-section\">\n    <form id=\"add-holding-amount-form\">\n        <label form=\"add-holding-amount-form\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694</label>\n        <div class=\"add-holding-amount-wrap\">\n            <input type=\"number\" name=\"add-holding-amount\" placeholder=\"\uAE08\uC561\" form=\"add-holding-amount-form\" required>\n            <button id=\"add-holding-amount-submit-button\" class=\"button accent\">\uCD94\uAC00</button>\n        </div>\n    </form>\n    <p class=\"holding-amount\">\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span id=\"total-holding-amount\">0\uC6D0</span></p>\n  </section>\n  <section id=\"holding-amount-table-section\" class=\"table-section\">\n    <table id=\"holding-amount-table\" class=\"table\">\n        <caption>\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804</caption>\n        <thead>\n            <tr><th>\uB3D9\uC804</th><th>\uAC1C\uC218</th></tr>\n        </thead>\n        <tbody>\n            <tr><td>500\uC6D0</td><td>0\uAC1C</td></tr>\n            <tr><td>100\uC6D0</td><td>0\uAC1C</td></tr>\n            <tr><td>50\uC6D0</td><td>0\uAC1C</td></tr>\n            <tr><td>10\uC6D0</td><td>0\uAC1C</td></tr>\n        </tbody>\n    </table>\n  </section>\n  ",
-  productTableRowInners: function productTableRowInners(_ref) {
-    var name = _ref.name,
-        price = _ref.price,
-        quantity = _ref.quantity;
-    return "\n    <td>".concat(name, "</td>\n    <td>").concat(price.toLocaleString(), "</td>\n    <td>").concat(quantity, "</td>\n    <td>\n      <div class=\"button-group\">\n        <button class=\"button product-update-button\" type=\"button\">\uC218\uC815</button>\n        <button class=\"button product-delete-button\" type=\"button\">\uC0AD\uC81C</button>\n      </div>\n    </td>\n  ");
-  },
-  productTableRows: function productTableRows(products) {
-    return products.map(function (_ref2, index) {
-      var name = _ref2.name,
-          price = _ref2.price,
-          quantity = _ref2.quantity;
-      return "\n        <tr data-primary-key=\"".concat(index, "\">\n          ").concat(template.productTableRowInners({
-        name: name,
-        price: price,
-        quantity: quantity
-      }), "\n        </tr>");
-    }).join('');
-  },
-  productTableRowUpdate: function productTableRowUpdate(_ref3) {
-    var name = _ref3.name,
-        price = _ref3.price,
-        quantity = _ref3.quantity;
-    return "\n    <td><input type=\"text\" name=\"name\" placeholder=\"\uC0C1\uD488\uBA85\" value=\"".concat(name, "\"></td>\n    <td><input type=\"number\" name=\"price\" placeholder=\"\uAC00\uACA9\" value=\"").concat(price, "\"></td>\n    <td><input type=\"number\" name=\"quantity\" placeholder=\"\uC218\uB7C9\" value=\"").concat(quantity, "\"></td>\n    <td>\n      <div class=\"button-group\">\n        <button class=\"button product-update-confirm-button\" type=\"button\">\uD655\uC778</button>\n        <button class=\"button product-update-cancel-button\" type=\"button\">\uCDE8\uC18C</button>\n      </div>\n    </td>\n");
-  },
-  holdingAmountTableRows: function holdingAmountTableRows(coins) {
-    return coins.map(function (coin, index) {
-      return "\n      <tr>\n        <td>".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.COIN_TYPE[index], "\uC6D0</td>\n        <td>").concat(coin.toLocaleString(), "\uAC1C</td>\n      </tr>");
-    }).join('');
-  }
-};
-
-/***/ }),
-
-/***/ "./src/styles/index.scss":
+/***/ "./src/Styles/index.scss":
 /*!*******************************!*\
-  !*** ./src/styles/index.scss ***!
+  !*** ./src/Styles/index.scss ***!
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -561,327 +14,27 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/es/constants/index.ts":
-/*!***********************************!*\
-  !*** ./src/es/constants/index.ts ***!
-  \***********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ "./src/index.ts":
+/*!**********************!*\
+  !*** ./src/index.ts ***!
+  \**********************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "COIN_TYPE": () => (/* binding */ COIN_TYPE),
-/* harmony export */   "VENDING_MACHINE": () => (/* binding */ VENDING_MACHINE),
-/* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE)
-/* harmony export */ });
-var COIN_TYPE = [500, 100, 50, 10].sort(function (a, b) { return b - a; });
-var VENDING_MACHINE = {
-    MIN_PRODUCT_NAME: 1,
-    MAX_PRODUCT_NAME: 10,
-    MIN_PRODUCT_PRICE: 100,
-    MAX_PRODUCT_PRICE: 10000,
-    MIN_PRODUCT_QUANTITY: 1,
-    MAX_PRODUCT_QUANTITY: 20,
-    MAX_HOLDING_AMOUNT: 100000,
-    MONEY_UNIT: 10
-};
-var ERROR_MESSAGE = {
-    PRODUCT_NAME_REQUIRED: '상품명을 입력해주세요.',
-    PRODUCT_NAME_LENGTH: "\uC0C1\uD488\uBA85\uC740 ".concat(VENDING_MACHINE.MIN_PRODUCT_NAME, "\uC790\uC5D0\uC11C ").concat(VENDING_MACHINE.MAX_PRODUCT_NAME, "\uC790\uAE4C\uC9C0 \uC785\uB825\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."),
-    PRODUCT_PRICE_ONLY_NUMBER: '상품 가격은 숫자만 입력할 수 있습니다.',
-    PRODUCT_PRICE_WRONG_RANGE: "\uC0C1\uD488 \uAC00\uACA9\uC740 ".concat(VENDING_MACHINE.MIN_PRODUCT_PRICE, "\uC6D0\uC5D0\uC11C ").concat(VENDING_MACHINE.MAX_PRODUCT_PRICE, "\uC6D0\uAE4C\uC9C0 \uC785\uB825\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."),
-    PRODUCT_PRICE_WRONG_UNIT: "\uC0C1\uD488 \uAC00\uACA9\uC740 ".concat(VENDING_MACHINE.MONEY_UNIT, "\uC6D0 \uB2E8\uC704\uB85C \uC785\uB825\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."),
-    PRODUCT_QUANTITY_ONLY_NUMBER: '상품 수량은 숫자만 입력할 수 있습니다.',
-    PRODUCT_QUANTITY_WRONG_RANGE: "\uC0C1\uD488 \uC218\uB7C9\uC740 ".concat(VENDING_MACHINE.MIN_PRODUCT_QUANTITY, "\uAC1C\uC5D0\uC11C \uCD5C\uB300 ").concat(VENDING_MACHINE.MAX_PRODUCT_QUANTITY, "\uAC1C\uAE4C\uC9C0\uB9CC \uC785\uB825\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."),
-    HOLDING_AMOUNT_ONLY_NUMBER: '추가할 보유 금액은 숫자만 입력할 수 있습니다.',
-    HOLDING_AMOUNT_WRONG_UNIT: "\uCD94\uAC00\uD560 \uC790\uD310\uAE30 \uBCF4\uC720 \uAE08\uC561\uC740 ".concat(VENDING_MACHINE.MONEY_UNIT, "\uC6D0 \uB2E8\uC704\uB85C \uC785\uB825\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."),
-    HOLDING_AMOUNT_WRONG_LIMIT: "\uC790\uD310\uAE30 \uBCF4\uC720 \uAE08\uC561\uC740 ".concat(VENDING_MACHINE.MAX_HOLDING_AMOUNT, "\uC6D0\uAE4C\uC9C0 \uCDA9\uC804\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.")
-};
+/* harmony import */ var Styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! Styles */ "./src/Styles/index.scss");
 
+/*
+import * as PageList from 'Pages/PageList';
+import Router from 'Router';
 
-/***/ }),
+new Router(PageList);
+*/
+const { hi } = await __webpack_require__.e(/*! import() */ "src_Test_js").then(__webpack_require__.bind(__webpack_require__, /*! ./Test.js */ "./src/Test.js"));
+hi();
 
-/***/ "./src/es/store/Abstract.ts":
-/*!**********************************!*\
-  !*** ./src/es/store/Abstract.ts ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var Store = /** @class */ (function () {
-    function Store() {
-        this.subscribers = [];
-    }
-    Store.prototype.addSubscriber = function (subscriber) {
-        this.subscribers.push(subscriber);
-    };
-    Store.prototype.setState = function (newState) {
-        var _this = this;
-        var changedStateNames = Object.entries(newState).map(function (_a) {
-            var key = _a[0];
-            return key;
-        });
-        this.state = __assign(__assign({}, this.state), newState);
-        this.subscribers.forEach(function (renderMethod) {
-            return renderMethod({ state: _this.state, changedStateNames: changedStateNames });
-        });
-    };
-    Store.prototype.getState = function () {
-        return __assign({}, this.state);
-    };
-    return Store;
-}());
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Store);
-
-
-/***/ }),
-
-/***/ "./src/es/store/HoldingAmountStore.ts":
-/*!********************************************!*\
-  !*** ./src/es/store/HoldingAmountStore.ts ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./src/es/constants/index.ts");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils */ "./src/es/utils/index.ts");
-/* harmony import */ var _Abstract__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Abstract */ "./src/es/store/Abstract.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-
-
-
-var HoldingAmountStore = /** @class */ (function (_super) {
-    __extends(HoldingAmountStore, _super);
-    function HoldingAmountStore() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {
-            coins: [0, 0, 0, 0]
-        };
-        return _this;
-    }
-    HoldingAmountStore.prototype.getTotalAmount = function () {
-        return this.state.coins.reduce(function (previous, coin, index) { return (previous += _constants__WEBPACK_IMPORTED_MODULE_0__.COIN_TYPE[index] * coin); }, 0);
-    };
-    HoldingAmountStore.prototype.getMaxCoinIndex = function (baseAmount) {
-        return _constants__WEBPACK_IMPORTED_MODULE_0__.COIN_TYPE.findIndex(function (coin) { return baseAmount >= coin; });
-    };
-    HoldingAmountStore.prototype.getRandomCoinsFromAmount = function (amount) {
-        var leftAmount = amount;
-        var randomCoins = [0, 0, 0, 0];
-        while (leftAmount > 0) {
-            var coinIndex = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getRandomNumber)(this.getMaxCoinIndex(leftAmount), _constants__WEBPACK_IMPORTED_MODULE_0__.COIN_TYPE.length - 1);
-            var randomCoin = _constants__WEBPACK_IMPORTED_MODULE_0__.COIN_TYPE[coinIndex];
-            randomCoins[coinIndex] += 1;
-            leftAmount -= randomCoin;
-        }
-        return randomCoins;
-    };
-    HoldingAmountStore.prototype.addAmount = function (amount) {
-        var coinsToAdd = this.getRandomCoinsFromAmount(amount);
-        var totalCoins = this.state.coins.map(function (value, index) { return value + coinsToAdd[index]; });
-        this.setState({
-            coins: totalCoins
-        });
-    };
-    return HoldingAmountStore;
-}(_Abstract__WEBPACK_IMPORTED_MODULE_2__["default"]));
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new HoldingAmountStore());
-
-
-/***/ }),
-
-/***/ "./src/es/store/ProductStore.ts":
-/*!**************************************!*\
-  !*** ./src/es/store/ProductStore.ts ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _Abstract__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Abstract */ "./src/es/store/Abstract.ts");
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-
-var ProductStore = /** @class */ (function (_super) {
-    __extends(ProductStore, _super);
-    function ProductStore() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {
-            products: []
-        };
-        return _this;
-    }
-    ProductStore.prototype.addProduct = function (product) {
-        this.setState({
-            products: __spreadArray(__spreadArray([], this.state.products, true), [product], false)
-        });
-    };
-    ProductStore.prototype.updateProduct = function (index, replaceProduct) {
-        if (replaceProduct === void 0) { replaceProduct = null; }
-        var updateProduct = __spreadArray([], this.state.products, true);
-        replaceProduct
-            ? updateProduct.splice(index, 1, replaceProduct)
-            : updateProduct.splice(index, 1);
-        this.setState({
-            products: updateProduct
-        });
-    };
-    ProductStore.prototype.findProductIndexByName = function (name) {
-        return this.state.products.findIndex(function (product) { return product.name === name; });
-    };
-    return ProductStore;
-}(_Abstract__WEBPACK_IMPORTED_MODULE_0__["default"]));
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new ProductStore());
-
-
-/***/ }),
-
-/***/ "./src/es/utils/VendingMachine/validator.ts":
-/*!**************************************************!*\
-  !*** ./src/es/utils/VendingMachine/validator.ts ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "validateProduct": () => (/* binding */ validateProduct),
-/* harmony export */   "validateHoldingAmountToAdd": () => (/* binding */ validateHoldingAmountToAdd)
-/* harmony export */ });
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants */ "./src/es/constants/index.ts");
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../index */ "./src/es/utils/index.ts");
-
-
-var validateProduct = function (product) {
-    var name = product.name, price = product.price, quantity = product.quantity;
-    var MIN_PRODUCT_NAME = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MIN_PRODUCT_NAME, MAX_PRODUCT_NAME = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MAX_PRODUCT_NAME, MIN_PRODUCT_PRICE = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MIN_PRODUCT_PRICE, MAX_PRODUCT_PRICE = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MAX_PRODUCT_PRICE, MONEY_UNIT = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MONEY_UNIT, MIN_PRODUCT_QUANTITY = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MIN_PRODUCT_QUANTITY, MAX_PRODUCT_QUANTITY = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MAX_PRODUCT_QUANTITY;
-    if (name === '')
-        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_NAME_REQUIRED);
-    if (!(0,_index__WEBPACK_IMPORTED_MODULE_1__.isStringLengthInRange)(name, MIN_PRODUCT_NAME, MAX_PRODUCT_NAME))
-        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_NAME_LENGTH);
-    if (!Number.isInteger(price))
-        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_PRICE_ONLY_NUMBER);
-    if (!(0,_index__WEBPACK_IMPORTED_MODULE_1__.isNumberInRange)(price, MIN_PRODUCT_PRICE, MAX_PRODUCT_PRICE))
-        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_PRICE_WRONG_RANGE);
-    if (!(0,_index__WEBPACK_IMPORTED_MODULE_1__.isCorrectNumberUnit)(price, MONEY_UNIT))
-        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_PRICE_WRONG_UNIT);
-    if (!Number.isInteger(quantity))
-        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_QUANTITY_ONLY_NUMBER);
-    if (!(0,_index__WEBPACK_IMPORTED_MODULE_1__.isNumberInRange)(quantity, MIN_PRODUCT_QUANTITY, MAX_PRODUCT_QUANTITY))
-        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.PRODUCT_QUANTITY_WRONG_RANGE);
-    return true;
-};
-var validateHoldingAmountToAdd = function (holdingAmountToAdd, totalAmount) {
-    var MAX_HOLDING_AMOUNT = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MAX_HOLDING_AMOUNT, MONEY_UNIT = _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE.MONEY_UNIT;
-    if (!Number.isInteger(holdingAmountToAdd))
-        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.HOLDING_AMOUNT_ONLY_NUMBER);
-    if (!(0,_index__WEBPACK_IMPORTED_MODULE_1__.isCorrectNumberUnit)(holdingAmountToAdd, MONEY_UNIT))
-        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.HOLDING_AMOUNT_WRONG_UNIT);
-    if (holdingAmountToAdd + totalAmount > MAX_HOLDING_AMOUNT)
-        throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.HOLDING_AMOUNT_WRONG_LIMIT);
-    return true;
-};
-
-
-/***/ }),
-
-/***/ "./src/es/utils/index.ts":
-/*!*******************************!*\
-  !*** ./src/es/utils/index.ts ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "$": () => (/* binding */ $),
-/* harmony export */   "$$": () => (/* binding */ $$),
-/* harmony export */   "getRandomNumber": () => (/* binding */ getRandomNumber),
-/* harmony export */   "isNumberInRange": () => (/* binding */ isNumberInRange),
-/* harmony export */   "isStringLengthInRange": () => (/* binding */ isStringLengthInRange),
-/* harmony export */   "isCorrectNumberUnit": () => (/* binding */ isCorrectNumberUnit),
-/* harmony export */   "getSearchParamsParse": () => (/* binding */ getSearchParamsParse),
-/* harmony export */   "getSearchParamsObject": () => (/* binding */ getSearchParamsObject)
-/* harmony export */ });
-var $ = function (selector, node) {
-    if (node === void 0) { node = document; }
-    return node.querySelector(selector);
-};
-var $$ = function (selector, node) {
-    if (node === void 0) { node = document; }
-    return node.querySelectorAll(selector);
-};
-var getRandomNumber = function (min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-};
-var isNumberInRange = function (value, min, max) {
-    return value >= min && value <= max;
-};
-var isStringLengthInRange = function (value, min, max) {
-    return value.length >= min && value.length <= max;
-};
-var isCorrectNumberUnit = function (value, unit) { return value % unit === 0; };
-var getSearchParamsParse = function (searchUrl) {
-    if (searchUrl === void 0) { searchUrl = ''; }
-    return "?".concat(searchUrl.split('?')[1]);
-};
-var getSearchParamsObject = function (searchUrl) {
-    if (searchUrl === void 0) { searchUrl = ''; }
-    return Object.fromEntries(new URLSearchParams(searchUrl));
-};
-
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
 
 /***/ })
 
@@ -911,7 +64,92 @@ var getSearchParamsObject = function (searchUrl) {
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/async module */
+/******/ 	(() => {
+/******/ 		var webpackThen = typeof Symbol === "function" ? Symbol("webpack then") : "__webpack_then__";
+/******/ 		var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
+/******/ 		var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
+/******/ 		var completeQueue = (queue) => {
+/******/ 			if(queue) {
+/******/ 				queue.forEach((fn) => (fn.r--));
+/******/ 				queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
+/******/ 			}
+/******/ 		}
+/******/ 		var completeFunction = (fn) => (!--fn.r && fn());
+/******/ 		var queueFunction = (queue, fn) => (queue ? queue.push(fn) : completeFunction(fn));
+/******/ 		var wrapDeps = (deps) => (deps.map((dep) => {
+/******/ 			if(dep !== null && typeof dep === "object") {
+/******/ 				if(dep[webpackThen]) return dep;
+/******/ 				if(dep.then) {
+/******/ 					var queue = [];
+/******/ 					dep.then((r) => {
+/******/ 						obj[webpackExports] = r;
+/******/ 						completeQueue(queue);
+/******/ 						queue = 0;
+/******/ 					}, (e) => {
+/******/ 						obj[webpackError] = e;
+/******/ 						completeQueue(queue);
+/******/ 						queue = 0;
+/******/ 					});
+/******/ 					var obj = {};
+/******/ 					obj[webpackThen] = (fn, reject) => (queueFunction(queue, fn), dep['catch'](reject));
+/******/ 					return obj;
+/******/ 				}
+/******/ 			}
+/******/ 			var ret = {};
+/******/ 			ret[webpackThen] = (fn) => (completeFunction(fn));
+/******/ 			ret[webpackExports] = dep;
+/******/ 			return ret;
+/******/ 		}));
+/******/ 		__webpack_require__.a = (module, body, hasAwait) => {
+/******/ 			var queue = hasAwait && [];
+/******/ 			var exports = module.exports;
+/******/ 			var currentDeps;
+/******/ 			var outerResolve;
+/******/ 			var reject;
+/******/ 			var isEvaluating = true;
+/******/ 			var nested = false;
+/******/ 			var whenAll = (deps, onResolve, onReject) => {
+/******/ 				if (nested) return;
+/******/ 				nested = true;
+/******/ 				onResolve.r += deps.length;
+/******/ 				deps.map((dep, i) => (dep[webpackThen](onResolve, onReject)));
+/******/ 				nested = false;
+/******/ 			};
+/******/ 			var promise = new Promise((resolve, rej) => {
+/******/ 				reject = rej;
+/******/ 				outerResolve = () => (resolve(exports), completeQueue(queue), queue = 0);
+/******/ 			});
+/******/ 			promise[webpackExports] = exports;
+/******/ 			promise[webpackThen] = (fn, rejectFn) => {
+/******/ 				if (isEvaluating) { return completeFunction(fn); }
+/******/ 				if (currentDeps) whenAll(currentDeps, fn, rejectFn);
+/******/ 				queueFunction(queue, fn);
+/******/ 				promise['catch'](rejectFn);
+/******/ 			};
+/******/ 			module.exports = promise;
+/******/ 			body((deps) => {
+/******/ 				currentDeps = wrapDeps(deps);
+/******/ 				var fn;
+/******/ 				var getResult = () => (currentDeps.map((d) => {
+/******/ 					if(d[webpackError]) throw d[webpackError];
+/******/ 					return d[webpackExports];
+/******/ 				}))
+/******/ 				var promise = new Promise((resolve, reject) => {
+/******/ 					fn = () => (resolve(getResult));
+/******/ 					fn.r = 0;
+/******/ 					whenAll(currentDeps, fn, reject);
+/******/ 				});
+/******/ 				return fn.r ? promise : getResult();
+/******/ 			}, (err) => (err && reject(promise[webpackError] = err), outerResolve()));
+/******/ 			isEvaluating = false;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -924,9 +162,98 @@ var getSearchParamsObject = function (searchUrl) {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/ensure chunk */
+/******/ 	(() => {
+/******/ 		__webpack_require__.f = {};
+/******/ 		// This file contains only the entry chunk.
+/******/ 		// The chunk loading function for additional chunks
+/******/ 		__webpack_require__.e = (chunkId) => {
+/******/ 			return Promise.all(Object.keys(__webpack_require__.f).reduce((promises, key) => {
+/******/ 				__webpack_require__.f[key](chunkId, promises);
+/******/ 				return promises;
+/******/ 			}, []));
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/get javascript chunk filename */
+/******/ 	(() => {
+/******/ 		// This function allow to reference async chunks
+/******/ 		__webpack_require__.u = (chunkId) => {
+/******/ 			// return url for filenames based on template
+/******/ 			return "" + chunkId + ".bundle.js";
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/get mini-css chunk filename */
+/******/ 	(() => {
+/******/ 		// This function allow to reference async chunks
+/******/ 		__webpack_require__.miniCssF = (chunkId) => {
+/******/ 			// return url for filenames based on template
+/******/ 			return undefined;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/load script */
+/******/ 	(() => {
+/******/ 		var inProgress = {};
+/******/ 		var dataWebpackPrefix = "javascript-vendingmachine:";
+/******/ 		// loadScript function to load a script via script tag
+/******/ 		__webpack_require__.l = (url, done, key, chunkId) => {
+/******/ 			if(inProgress[url]) { inProgress[url].push(done); return; }
+/******/ 			var script, needAttach;
+/******/ 			if(key !== undefined) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				for(var i = 0; i < scripts.length; i++) {
+/******/ 					var s = scripts[i];
+/******/ 					if(s.getAttribute("src") == url || s.getAttribute("data-webpack") == dataWebpackPrefix + key) { script = s; break; }
+/******/ 				}
+/******/ 			}
+/******/ 			if(!script) {
+/******/ 				needAttach = true;
+/******/ 				script = document.createElement('script');
+/******/ 		
+/******/ 				script.charset = 'utf-8';
+/******/ 				script.timeout = 120;
+/******/ 				if (__webpack_require__.nc) {
+/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 				}
+/******/ 				script.setAttribute("data-webpack", dataWebpackPrefix + key);
+/******/ 				script.src = url;
+/******/ 			}
+/******/ 			inProgress[url] = [done];
+/******/ 			var onScriptComplete = (prev, event) => {
+/******/ 				// avoid mem leaks in IE.
+/******/ 				script.onerror = script.onload = null;
+/******/ 				clearTimeout(timeout);
+/******/ 				var doneFns = inProgress[url];
+/******/ 				delete inProgress[url];
+/******/ 				script.parentNode && script.parentNode.removeChild(script);
+/******/ 				doneFns && doneFns.forEach((fn) => (fn(event)));
+/******/ 				if(prev) return prev(event);
+/******/ 			}
+/******/ 			;
+/******/ 			var timeout = setTimeout(onScriptComplete.bind(null, undefined, { type: 'timeout', target: script }), 120000);
+/******/ 			script.onerror = onScriptComplete.bind(null, script.onerror);
+/******/ 			script.onload = onScriptComplete.bind(null, script.onload);
+/******/ 			needAttach && document.head.appendChild(script);
+/******/ 		};
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
@@ -940,29 +267,123 @@ var getSearchParamsObject = function (searchUrl) {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"main": 0
+/******/ 		};
+/******/ 		
+/******/ 		__webpack_require__.f.j = (chunkId, promises) => {
+/******/ 				// JSONP chunk loading for javascript
+/******/ 				var installedChunkData = __webpack_require__.o(installedChunks, chunkId) ? installedChunks[chunkId] : undefined;
+/******/ 				if(installedChunkData !== 0) { // 0 means "already installed".
+/******/ 		
+/******/ 					// a Promise means "currently loading".
+/******/ 					if(installedChunkData) {
+/******/ 						promises.push(installedChunkData[2]);
+/******/ 					} else {
+/******/ 						if(true) { // all chunks have JS
+/******/ 							// setup Promise in chunk cache
+/******/ 							var promise = new Promise((resolve, reject) => (installedChunkData = installedChunks[chunkId] = [resolve, reject]));
+/******/ 							promises.push(installedChunkData[2] = promise);
+/******/ 		
+/******/ 							// start chunk loading
+/******/ 							var url = __webpack_require__.p + __webpack_require__.u(chunkId);
+/******/ 							// create error before stack unwound to get useful stacktrace later
+/******/ 							var error = new Error();
+/******/ 							var loadingEnded = (event) => {
+/******/ 								if(__webpack_require__.o(installedChunks, chunkId)) {
+/******/ 									installedChunkData = installedChunks[chunkId];
+/******/ 									if(installedChunkData !== 0) installedChunks[chunkId] = undefined;
+/******/ 									if(installedChunkData) {
+/******/ 										var errorType = event && (event.type === 'load' ? 'missing' : event.type);
+/******/ 										var realSrc = event && event.target && event.target.src;
+/******/ 										error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
+/******/ 										error.name = 'ChunkLoadError';
+/******/ 										error.type = errorType;
+/******/ 										error.request = realSrc;
+/******/ 										installedChunkData[1](error);
+/******/ 									}
+/******/ 								}
+/******/ 							};
+/******/ 							__webpack_require__.l(url, loadingEnded, "chunk-" + chunkId, chunkId);
+/******/ 						} else installedChunks[chunkId] = 0;
+/******/ 					}
+/******/ 				}
+/******/ 		};
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		// no on chunks loaded
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0;
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
+/******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
+/******/ 			}
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					installedChunks[chunkId][0]();
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 		
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = self["webpackChunkjavascript_vendingmachine"] = self["webpackChunkjavascript_vendingmachine"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-/*!**********************!*\
-  !*** ./src/index.ts ***!
-  \**********************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles */ "./src/styles/index.scss");
-/* harmony import */ var _es_display_pages_ProductPage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./es/display/pages/ProductPage */ "./src/es/display/pages/ProductPage.js");
-/* harmony import */ var _es_display_pages_HoldingAmountPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./es/display/pages/HoldingAmountPage */ "./src/es/display/pages/HoldingAmountPage.js");
-/* harmony import */ var _es_display_Router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./es/display/Router */ "./src/es/display/Router.js");
-
-
-
-
-new _es_display_Router__WEBPACK_IMPORTED_MODULE_3__["default"]({
-    product: new _es_display_pages_ProductPage__WEBPACK_IMPORTED_MODULE_1__["default"](),
-    holding_amount: new _es_display_pages_HoldingAmountPage__WEBPACK_IMPORTED_MODULE_2__["default"]()
-});
-
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module used 'module' so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.ts");
+/******/ 	
 /******/ })()
 ;
 //# sourceMappingURL=bundle.js.map
